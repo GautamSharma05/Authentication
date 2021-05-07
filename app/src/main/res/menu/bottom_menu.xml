@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/Chats"
+        android:icon="@drawable/ic_baseline_chat_24"
+        android:title="Chats" />
+    <item
+        android:id="@+id/Groups"
+        android:icon="@drawable/ic_baseline_people_24"
+        android:title="Groups" />
+    <item
+        android:id="@+id/Profile"
+        android:icon="@drawable/ic_baseline_emoji_people_24"
+        android:title="Profile" />
+</menu>
