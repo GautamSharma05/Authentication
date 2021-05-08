@@ -27,9 +27,9 @@ import java.util.Map;
 
 public class CompleteProfile extends AppCompatActivity {
     ActivityCompleteProfileBinding binding;
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private FirebaseFirestore fStore = FirebaseFirestore.getInstance();
-    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private final FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+    private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     String UserId;
     String profileImageUri;
     @Override
@@ -66,6 +66,7 @@ public class CompleteProfile extends AppCompatActivity {
                 users.put("RelationShipStatus",relationshipStatus);
                 users.put("Bio",Bio);
                 users.put("ProfileImage",profileImageUri);
+                users.put("uid",UserId);
                 documentReference.set(users).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -89,11 +90,16 @@ public class CompleteProfile extends AppCompatActivity {
             if(resultCode == Activity.RESULT_OK){
                 Uri imageUri = data.getData();
                 binding.NewprofileImage.setImageURI(imageUri);
-                StorageReference fileRef = storageReference.child("profile.jpg");
+                StorageReference fileRef = storageReference.child("Profile").child(mAuth.getUid());
                 fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        profileImageUri = fileRef.getDownloadUrl().toString();
+                        fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                profileImageUri = uri.toString();
+                            }
+                        });
                     }
                 });
 

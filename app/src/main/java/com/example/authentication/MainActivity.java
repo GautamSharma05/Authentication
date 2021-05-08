@@ -14,6 +14,7 @@ import com.example.authentication.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                       List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                       for (DocumentSnapshot d : list){
                           Users u = d.toObject(Users.class);
+
                           usersArrayList.add(u);
                       }
                       customAdapter.notifyDataSetChanged();

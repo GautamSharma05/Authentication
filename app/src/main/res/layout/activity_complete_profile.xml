@@ -6,21 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".CompleteProfile">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/NewprofileImage"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="120dp"
         android:layout_marginStart="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="44dp"
         android:layout_marginEnd="26dp"
         android:layout_marginRight="26dp"
+        android:src="@drawable/avatar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.437"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/avatar" />
-
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"

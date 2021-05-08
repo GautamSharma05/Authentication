@@ -2,6 +2,7 @@ package com.example.authentication;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.authentication.ChatActivity;
 import com.example.authentication.databinding.SampleChatsBinding;
+
 
 import java.util.ArrayList;
 
@@ -42,6 +45,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         Glide.with(context).load(users.getProfileImage())
                 .placeholder(R.drawable.avatar)
                 .into(viewHolder.binding.profile);
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra("FullName",users.getFullName());
+                intent.putExtra("ProfileImage",users.getProfileImage());
+                intent.putExtra("uid",users.getUid());
+                context.startActivity(intent);
+            }
+        });
     }
 
 
