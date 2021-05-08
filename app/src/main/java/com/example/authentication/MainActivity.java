@@ -47,8 +47,9 @@ public class MainActivity extends AppCompatActivity {
                       List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                       for (DocumentSnapshot d : list){
                           Users u = d.toObject(Users.class);
-
-                          usersArrayList.add(u);
+                          if(!u.getUid().equals(FirebaseAuth.getInstance().getUid())) {
+                              usersArrayList.add(u);
+                          }
                       }
                       customAdapter.notifyDataSetChanged();
                   }else{

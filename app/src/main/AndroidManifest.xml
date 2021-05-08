@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Authentication">
-        <activity android:name=".Activity.ChatActivity" />
+        <activity android:name=".ChatActivity" />
         <activity android:name=".CompleteProfile" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".ForgotPassword" />

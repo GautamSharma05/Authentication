@@ -49,7 +49,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ChatActivity.class);
+                Intent intent = new Intent(context,ChatActivity.class);
                 intent.putExtra("FullName",users.getFullName());
                 intent.putExtra("ProfileImage",users.getProfileImage());
                 intent.putExtra("uid",users.getUid());
