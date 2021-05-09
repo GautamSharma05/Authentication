@@ -3,28 +3,23 @@ package com.example.authentication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.os.Bundle;
 import android.view.View;
-
 import com.bumptech.glide.Glide;
-import com.example.authentication.Message;
-import com.example.authentication.MessagesAdapter;
-import com.example.authentication.R;
 import com.example.authentication.databinding.ActivityChatBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-
-
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import java.util.ArrayList;
 import java.util.Date;
+
+
 
 
 public class ChatActivity extends AppCompatActivity {
@@ -33,9 +28,11 @@ public class ChatActivity extends AppCompatActivity {
     ArrayList<Message> messageArrayList;
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     String senderRoom,receiverRoom;
     String receiverUid,senderUid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +56,7 @@ public class ChatActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         senderRoom = senderUid + receiverUid;
         receiverRoom = receiverUid + senderUid;
 
@@ -78,11 +76,10 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
-
-
         binding.sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String messageTxt = binding.messageBox.getText().toString();
                 Date date = new Date();
                 Message message = new Message(messageTxt,senderUid,date.getTime());
@@ -111,4 +108,6 @@ public class ChatActivity extends AppCompatActivity {
         });
 
     }
+
+
 }

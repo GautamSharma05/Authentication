@@ -3,33 +3,27 @@ package com.example.authentication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
-import com.example.authentication.Notifications.Token;
 import com.example.authentication.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
-    private ArrayList<Users> usersArrayList;
-    private CustomAdapter customAdapter;
-   private FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+    PostAdapter postAdapter;
+    ArrayList<Posts> postsArrayList;
+    private final FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,49 +31,51 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportActionBar().hide();
-        usersArrayList = new ArrayList<>();
-        binding.recyclerView.setHasFixedSize(true);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        customAdapter = new CustomAdapter(this, usersArrayList);
-        binding.recyclerView.setAdapter(customAdapter);
-        fStore.collection("Users").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        postsArrayList = new ArrayList<>();
+        postAdapter = new PostAdapter(this,postsArrayList);
+        binding.recyclerView3.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerView3.setAdapter(postAdapter);
+        fStore.collection("Posts").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                  if(!queryDocumentSnapshots.isEmpty()){
-                      //binding.progressBar.setVisibility(View.GONE);
-                      List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                      for (DocumentSnapshot d : list){
-                          Users u = d.toObject(Users.class);
-                          if(!u.getUid().equals(FirebaseAuth.getInstance().getUid())) {
-                              usersArrayList.add(u);
-                          }
-                      }
-                      customAdapter.notifyDataSetChanged();
-                  }else{
-                      Toast.makeText(MainActivity.this, "No Data Found", Toast.LENGTH_SHORT).show();
-                  }
+                if(!queryDocumentSnapshots.isEmpty()){
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    for (DocumentSnapshot d : list){
+                        Posts posts = d.toObject(Posts.class);
+                        postsArrayList.add(posts);
+                    }
+                    postAdapter.notifyDataSetChanged();
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity.this, "Failed To Get Data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Data Not Found", Toast.LENGTH_SHORT).show();
             }
         });
-        /*public void updateToken(String token){
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
-            Token mToken = new Token(token);
-            ref.child(FirebaseAuth.getInstance().getUid()).setValue(mToken);
-        }*/
+
+      binding.messagesActivity.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent intent = new Intent(MainActivity.this,MessagesActivity.class);
+              startActivity(intent);
+          }
+      });
       binding.BottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
           @Override
           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-              switch (item.getItemId()){
-                  case R.id.Profile:
-                      Intent intent = new Intent(MainActivity.this,ProfileActivity.class);
-                      startActivity(intent);
+              if (item.getItemId() == R.id.Profile) {
+                  Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                  startActivity(intent);
+              }
+              else if(item.getItemId() == R.id.Groups){
+                  Intent intent = new Intent(MainActivity.this,PostsActivity.class);
+                  startActivity(intent);
               }
               return false;
           }
       });
+
     }
+
 }
