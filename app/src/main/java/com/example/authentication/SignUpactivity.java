@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -55,27 +56,43 @@ public class SignUpactivity extends AppCompatActivity {
     }
 
     public void SignUp() {
-        String name = binding.PersonName.getText().toString();
+        String name = binding.PersonName.getText().toString().trim();
         String mobile = binding.phoneNumber.getText().toString();
         String email = binding.emailAdress.getText().toString();
         String password = binding.password.getText().toString();
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d("UserCreated", "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            Log.w("User Creation Failed", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(SignUpactivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
+        if (TextUtils.isEmpty(name)) {
+            binding.PersonName.setError("Full Name is Required");
+
+        }
+        if (TextUtils.isEmpty(mobile)) {
+            binding.phoneNumber.setError("Mobile Number is Required");
+        }
+        if (TextUtils.isEmpty(email)) {
+            binding.emailAdress.setError("Email is Required");
+        }
+        if (TextUtils.isEmpty(password)) {
+            binding.password.setError("Password is Required");
+        }
+        if (password.length() < 6) {
+            binding.password.setError("Password Must be equal to 6 character or greater than 6");
+        } else {
+            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Log.d("UserCreated", "createUserWithEmail:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        updateUI(user);
+                    } else {
+                        Log.w("User Creation Failed", "createUserWithEmail:failure", task.getException());
+                        Toast.makeText(SignUpactivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        updateUI(null);
                     }
-                });
+                }
+            });
 
+        }
     }
-
     private void updateUI(FirebaseUser user) {
         if(user != null){
             String name = binding.PersonName.getText().toString();

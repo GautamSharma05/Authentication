@@ -15,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +36,16 @@ public class MainActivity extends AppCompatActivity {
         postAdapter = new PostAdapter(this,postsArrayList);
         binding.recyclerView3.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView3.setAdapter(postAdapter);
-        fStore.collection("Posts").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        fStore.collection("Posts").orderBy("timeStamp", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 if(!queryDocumentSnapshots.isEmpty()){
                     List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                     for (DocumentSnapshot d : list){
                         Posts posts = d.toObject(Posts.class);
-                        postsArrayList.add(posts);
+                        if(!posts.getUid().equals(FirebaseAuth.getInstance().getUid())) {
+                            postsArrayList.add(posts);
+                        }
                     }
                     postAdapter.notifyDataSetChanged();
                 }

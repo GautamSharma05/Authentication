@@ -38,6 +38,7 @@ public class CompleteProfile extends AppCompatActivity {
         setContentView(R.layout.activity_complete_profile);
         binding = ActivityCompleteProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        getSupportActionBar().hide();
         String name = getIntent().getStringExtra("FullName");
         String email = getIntent().getStringExtra("Email");
         String mobile = getIntent().getStringExtra("Mobile");
@@ -105,5 +106,11 @@ public class CompleteProfile extends AppCompatActivity {
 
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+        super.onBackPressed();
     }
 }

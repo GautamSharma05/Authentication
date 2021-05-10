@@ -1,5 +1,7 @@
 package com.example.authentication;
 
+import java.sql.Timestamp;
+
 public class Posts {
     private  String CreatedBy,Captions,PostImage,uid,profileImage;
     private long timeStamp;

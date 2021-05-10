@@ -15,14 +15,16 @@ import com.example.authentication.databinding.SampleChatsBinding;
 
 import java.util.ArrayList;
 
-public class PostAdapter extends RecyclerView.Adapter   {
+public class PostAdapter extends RecyclerView.Adapter{
 
     Context context;
     ArrayList<Posts> postsArrayList;
 
+
     public PostAdapter(Context context, ArrayList<Posts> postsArrayList) {
         this.context = context;
         this.postsArrayList = postsArrayList;
+
     }
 
     @NonNull
@@ -39,6 +41,8 @@ public class PostAdapter extends RecyclerView.Adapter   {
                  viewHolder.binding.FullName.setText(posts.getCreatedBy());
                  viewHolder.binding.FullnameLower.setText(posts.getCreatedBy());
                  viewHolder.binding.Captions.setText(posts.getCaptions());
+                 String time = Long.toString(posts.getTimeStamp());
+                 viewHolder.binding.postTIme.setText(time);
                  Glide.with(context).load(posts.getPostImage()).placeholder(R.drawable.avatar).into(viewHolder.binding.post);
     }
 

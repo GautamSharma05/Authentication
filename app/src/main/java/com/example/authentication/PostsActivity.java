@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +32,7 @@ public class PostsActivity extends AppCompatActivity {
     private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     String UserId;
     String postImageUri;
+    ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,9 @@ public class PostsActivity extends AppCompatActivity {
         binding = ActivityPostsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportActionBar().hide();
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Uploading Photo...");
+        dialog.setCancelable(false);
         binding.postImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,12 +57,14 @@ public class PostsActivity extends AppCompatActivity {
                 UserId = mAuth.getCurrentUser().getUid();
                 Date date = new Date();
                 String userName = "Gautam Sharma";
+                String profileImageUri = "Photo";
                 DocumentReference documentReference = fStore.collection("Posts").document();
                 Map<String,Object> posts = new HashMap<>();
                 posts.put("uid",UserId);
                 posts.put("CreatedBy",userName);
                 posts.put("Captions",captions);
                 posts.put("PostImage",postImageUri);
+                posts.put("ProfileImageUri",profileImageUri);
                 posts.put("timeStamp",date.getTime());
                 documentReference.set(posts).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -84,7 +92,8 @@ public class PostsActivity extends AppCompatActivity {
             if(resultCode == Activity.RESULT_OK){
                 Uri imageUri = data.getData();
                 binding.postImage.setImageURI(imageUri);
-                StorageReference fileRef = storageReference.child("Posts").child(mAuth.getUid());
+                StorageReference fileRef = storageReference.child("Posts").child("myPost"+ Calendar.getInstance().getTime() + ".jpg");
+                dialog.show();
                 fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -92,11 +101,16 @@ public class PostsActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
                                 postImageUri = uri.toString();
+                                dialog.dismiss();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(PostsActivity.this, "Image Uri Not Found", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 });
-
             }
         }
     }
