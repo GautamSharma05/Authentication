@@ -15,7 +15,7 @@
         <activity android:name=".CompleteProfile" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".ForgotPassword" />
-        <activity android:name=".SignUpactivity" />
+        <activity android:name=".SignUpActivity"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

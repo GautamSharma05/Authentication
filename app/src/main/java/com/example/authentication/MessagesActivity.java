@@ -18,6 +18,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MessagesActivity extends AppCompatActivity {
     ActivityMessagesBinding binding;
@@ -30,7 +31,7 @@ public class MessagesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_messages);
         binding = ActivityMessagesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         usersArrayList = new ArrayList<>();
         binding.recyclerView.setHasFixedSize(true);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -44,7 +45,7 @@ public class MessagesActivity extends AppCompatActivity {
                     List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                     for (DocumentSnapshot d : list){
                         Users u = d.toObject(Users.class);
-                        if(!u.getUid().equals(FirebaseAuth.getInstance().getUid())) {
+                        if(!Objects.requireNonNull(u).getUid().equals(FirebaseAuth.getInstance().getUid())) {
                             usersArrayList.add(u);
                         }
                     }
