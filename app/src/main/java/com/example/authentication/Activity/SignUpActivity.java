@@ -1,4 +1,4 @@
-package com.example.authentication;
+package com.example.authentication.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.authentication.R;
 import com.example.authentication.databinding.ActivitySignUpactivityBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -80,7 +81,7 @@ public class SignUpActivity extends AppCompatActivity {
             String name = binding.PersonName.getText().toString();
             String mobile = binding.phoneNumber.getText().toString();
             String email = binding.emailAdress.getText().toString();
-            Intent intent = new Intent(SignUpActivity.this,CompleteProfile.class);
+            Intent intent = new Intent(SignUpActivity.this, CompleteProfileActivity.class);
             intent.putExtra("FullName",name);
             intent.putExtra("Email",email);
             intent.putExtra("Mobile",mobile);
@@ -99,7 +100,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Intent intent = new Intent(SignUpActivity.this,MainActivity.class);
+            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
             startActivity(intent);
         }
     }

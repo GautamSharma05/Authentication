@@ -1,4 +1,4 @@
-package com.example.authentication;
+package com.example.authentication.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.authentication.Models.Message;
+import com.example.authentication.R;
 import com.example.authentication.databinding.ItemRecieveBinding;
 import com.example.authentication.databinding.ItemSendBinding;
 import com.google.firebase.auth.FirebaseAuth;

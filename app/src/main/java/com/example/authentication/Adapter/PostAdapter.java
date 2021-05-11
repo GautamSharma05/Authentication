@@ -1,18 +1,16 @@
-package com.example.authentication;
+package com.example.authentication.Adapter;
 
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
+import com.example.authentication.Models.Posts;
+import com.example.authentication.R;
 import com.example.authentication.databinding.PostsBinding;
-import com.example.authentication.databinding.SampleChatsBinding;
-
 import java.util.ArrayList;
 
 public class PostAdapter extends RecyclerView.Adapter{
@@ -43,6 +41,7 @@ public class PostAdapter extends RecyclerView.Adapter{
                  viewHolder.binding.Captions.setText(posts.getCaptions());
                  String time = Long.toString(posts.getTimeStamp());
                  viewHolder.binding.postTIme.setText(time);
+                 Glide.with(context).load(posts.getProfileImageUri()).placeholder(R.drawable.avatar).into(viewHolder.binding.userImage);
                  Glide.with(context).load(posts.getPostImage()).placeholder(R.drawable.avatar).into(viewHolder.binding.post);
     }
 

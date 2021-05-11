@@ -1,4 +1,4 @@
-package com.example.authentication;
+package com.example.authentication.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.authentication.R;
 import com.example.authentication.databinding.ActivityCompleteProfileBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,7 +27,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CompleteProfile extends AppCompatActivity {
+public class CompleteProfileActivity extends AppCompatActivity {
     ActivityCompleteProfileBinding binding;
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private final FirebaseFirestore fStore = FirebaseFirestore.getInstance();
@@ -72,13 +73,13 @@ public class CompleteProfile extends AppCompatActivity {
                 documentReference.set(users).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                       Intent intent = new Intent(CompleteProfile.this,MainActivity.class);
+                       Intent intent = new Intent(CompleteProfileActivity.this, MainActivity.class);
                        startActivity(intent);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(CompleteProfile.this, "Please Try Again By Restarting The App", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CompleteProfileActivity.this, "Please Try Again By Restarting The App", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

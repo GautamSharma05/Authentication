@@ -1,4 +1,4 @@
-package com.example.authentication;
+package com.example.authentication.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.example.authentication.Adapter.PostAdapter;
+import com.example.authentication.Models.Posts;
+import com.example.authentication.R;
 import com.example.authentication.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -61,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
       binding.messagesActivity.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              Intent intent = new Intent(MainActivity.this,MessagesActivity.class);
+              Intent intent = new Intent(MainActivity.this, MessagesActivity.class);
               startActivity(intent);
           }
       });
@@ -73,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                   startActivity(intent);
               }
               else if(item.getItemId() == R.id.Posts){
-                  Intent intent = new Intent(MainActivity.this,PostsActivity.class);
+                  Intent intent = new Intent(MainActivity.this, PostsActivity.class);
                   startActivity(intent);
               }
               return false;

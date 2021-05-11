@@ -1,4 +1,4 @@
-package com.example.authentication;
+package com.example.authentication.Adapter;
 
 
 import android.content.Context;
@@ -12,7 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.authentication.ChatActivity;
+import com.example.authentication.Activity.ChatActivity;
+import com.example.authentication.R;
+import com.example.authentication.Models.Users;
 import com.example.authentication.databinding.SampleChatsBinding;
 
 

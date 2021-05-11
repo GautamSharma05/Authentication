@@ -1,4 +1,4 @@
-package com.example.authentication;
+package com.example.authentication.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.os.Bundle;
 import android.view.View;
 import com.bumptech.glide.Glide;
+import com.example.authentication.Models.Message;
+import com.example.authentication.Adapter.MessagesAdapter;
+import com.example.authentication.R;
 import com.example.authentication.databinding.ActivityChatBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -69,6 +72,7 @@ public class ChatActivity extends AppCompatActivity {
                     messageArrayList.add(message);
                 }
                 messagesAdapter.notifyDataSetChanged();
+                binding.recyclerView2.smoothScrollToPosition(binding.recyclerView2.getAdapter().getItemCount());
             }
 
             @Override

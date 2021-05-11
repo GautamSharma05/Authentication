@@ -9,21 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Authentication">
-        <activity android:name=".PostsActivity"></activity>
-        <activity android:name=".MessagesActivity" />
-        <activity android:name=".ChatActivity" />
-        <activity android:name=".CompleteProfile" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".ForgotPassword" />
-        <activity android:name=".SignUpActivity"/>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Activity.PostsActivity"></activity>
+        <activity android:name=".Activity.MessagesActivity" />
+        <activity android:name=".Activity.ChatActivity" />
+        <activity android:name=".Activity.CompleteProfileActivity" />
+        <activity android:name=".Activity.ProfileActivity" />
+        <activity android:name=".Activity.ForgotPasswordActivity" />
+        <activity android:name=".Activity.SignUpActivity"/>
+        <activity android:name=".Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".Activity.MainActivity" />
     </application>
 
 </manifest>

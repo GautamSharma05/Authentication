@@ -1,20 +1,20 @@
-package com.example.authentication;
+package com.example.authentication.Models;
 
 import java.sql.Timestamp;
 
 public class Posts {
-    private  String CreatedBy,Captions,PostImage,uid,profileImage;
+    private  String CreatedBy,Captions,PostImage,uid,ProfileImageUri;
     private long timeStamp;
 
     public Posts() {
 
     }
 
-    public Posts(String createdBy, String captions, String postImage, String profileImage, long timeStamp) {
+    public Posts(String createdBy, String captions, String postImage, String profileImageUri, long timeStamp) {
         this.CreatedBy = createdBy;
         this.Captions = captions;
         this.PostImage = postImage;
-        this.profileImage = profileImage;
+        this.ProfileImageUri = profileImageUri;
         this.timeStamp = timeStamp;
     }
 
@@ -50,12 +50,12 @@ public class Posts {
         this.uid = uid;
     }
 
-    public String getProfileImage() {
-        return profileImage;
+    public String getProfileImageUri() {
+        return ProfileImageUri;
     }
 
-    public void setProfileImage(String profileImage) {
-        this.profileImage = profileImage;
+    public void setProfileImageUri(String profileImageUri) {
+        ProfileImageUri = profileImageUri;
     }
 
     public long getTimeStamp() {

@@ -1,4 +1,4 @@
-package com.example.authentication;
+package com.example.authentication.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,11 +11,15 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
+
+import com.example.authentication.R;
+import com.example.authentication.Models.Users;
 import com.example.authentication.databinding.ActivityPostsBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -32,6 +36,7 @@ public class PostsActivity extends AppCompatActivity {
     private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     String UserId;
     String postImageUri;
+    String userName,profileImageUri;
     ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +55,21 @@ public class PostsActivity extends AppCompatActivity {
                 startActivityForResult(intent,2000);
             }
         });
+        fStore.collection("Users").document(UserId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Users u = documentSnapshot.toObject(Users.class);
+                assert u != null;
+                userName = u.getFullName();
+                profileImageUri = u.getProfileImage();
+            }
+        });
         binding.postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String captions = binding.captions.getText().toString();
                 UserId = mAuth.getCurrentUser().getUid();
                 Date date = new Date();
-                String userName = "Gautam Sharma";
-                String profileImageUri = "Photo";
                 DocumentReference documentReference = fStore.collection("Posts").document();
                 Map<String,Object> posts = new HashMap<>();
                 posts.put("uid",UserId);
@@ -69,7 +81,7 @@ public class PostsActivity extends AppCompatActivity {
                 documentReference.set(posts).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Intent intent = new Intent(PostsActivity.this,MainActivity.class);
+                        Intent intent = new Intent(PostsActivity.this, MainActivity.class);
                         startActivity(intent);
                     }
                 }).addOnFailureListener(new OnFailureListener() {

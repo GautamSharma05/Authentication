@@ -1,4 +1,4 @@
-package com.example.authentication;
+package com.example.authentication.Models;
 
 public class Message {
     private String messageId,message,senderId;

@@ -1,19 +1,19 @@
-package com.example.authentication;
+package com.example.authentication.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.authentication.R;
 import com.example.authentication.databinding.ActivityForgotPasswordBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ForgotPassword extends AppCompatActivity {
+public class ForgotPasswordActivity extends AppCompatActivity {
    ActivityForgotPasswordBinding binding;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     @Override
@@ -32,7 +32,7 @@ public class ForgotPassword extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(ForgotPassword.this, "Email Sent Successfully Check Your Email Box", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ForgotPasswordActivity.this, "Email Sent Successfully Check Your Email Box", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

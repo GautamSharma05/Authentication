@@ -1,4 +1,4 @@
-package com.example.authentication;
+package com.example.authentication.Models;
 
 public class Users {
     private String uid,FullName,MobileNumber,Email,Bio,ProfileImage,RelationshipStatus;
