@@ -31,8 +31,8 @@ public class ChatActivity extends AppCompatActivity {
     ArrayList<Message> messageArrayList;
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private final FirebaseFirestore fStore = FirebaseFirestore.getInstance();
-    private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    //private final FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+    //private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     String senderRoom,receiverRoom;
     String receiverUid,senderUid;
 
@@ -62,7 +62,7 @@ public class ChatActivity extends AppCompatActivity {
 
         senderRoom = senderUid + receiverUid;
         receiverRoom = receiverUid + senderUid;
-
+        //This code is to read a message from database
         database.getReference().child("Chats").child(senderRoom).child("messages").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -80,6 +80,7 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+        //This code is to write a message in a database
         binding.sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

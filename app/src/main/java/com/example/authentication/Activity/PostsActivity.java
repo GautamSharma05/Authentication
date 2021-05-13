@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,13 +21,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PostsActivity extends AppCompatActivity {
@@ -55,13 +61,22 @@ public class PostsActivity extends AppCompatActivity {
                 startActivityForResult(intent,2000);
             }
         });
-        fStore.collection("Users").document(UserId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        UserId = mAuth.getUid();
+        fStore.collection("Users").document(UserId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Users u = documentSnapshot.toObject(Users.class);
-                assert u != null;
-                userName = u.getFullName();
-                profileImageUri = u.getProfileImage();
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error != null){
+                    Log.d("error","onEvent",error);
+                    return;
+                }
+                if(value != null){
+                    Users u = value.toObject(Users.class);
+                    userName = u.getFullName();
+                    profileImageUri = u.getProfileImage();
+                }
+                else{
+                    Log.d("error","User Data not found");
+                }
             }
         });
         binding.postButton.setOnClickListener(new View.OnClickListener() {
