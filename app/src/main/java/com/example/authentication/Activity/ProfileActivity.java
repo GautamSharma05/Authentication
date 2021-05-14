@@ -36,6 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private final FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     String UserId;
+    int count = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,9 @@ public class ProfileActivity extends AppCompatActivity {
                     for (DocumentSnapshot d : list){
                         Posts posts = d.toObject(Posts.class);
                         if(posts.getUid().equals(FirebaseAuth.getInstance().getUid())) {
+                            count++;
+                            String postNumber = String.valueOf(count);
+                            binding.postNumber.setText(postNumber);
                             postsArrayList.add(posts);
                         }
                         profileAdapter.notifyDataSetChanged();
@@ -68,6 +72,7 @@ public class ProfileActivity extends AppCompatActivity {
                 Toast.makeText(ProfileActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
+        
         UserId = mAuth.getUid();
         fStore.collection("Users").document(UserId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
