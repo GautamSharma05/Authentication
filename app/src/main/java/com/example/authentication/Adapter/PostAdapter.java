@@ -5,22 +5,36 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.authentication.Models.Posts;
 import com.example.authentication.R;
 import com.example.authentication.databinding.PostsBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class PostAdapter extends RecyclerView.Adapter{
 
     Context context;
     ArrayList<Posts> postsArrayList;
+
 
 
     public PostAdapter(Context context, ArrayList<Posts> postsArrayList) {
@@ -67,6 +81,7 @@ public class PostAdapter extends RecyclerView.Adapter{
                  }
                  Glide.with(context).load(posts.getProfileImageUri()).placeholder(R.drawable.avatar).into(viewHolder.binding.userImage);
                  Glide.with(context).load(posts.getPostImage()).placeholder(R.drawable.avatar).into(viewHolder.binding.post);
+
     }
 
 
@@ -78,6 +93,7 @@ public class PostAdapter extends RecyclerView.Adapter{
 
     public static class PostsViewHolder extends RecyclerView.ViewHolder {
         PostsBinding binding;
+
         public PostsViewHolder(View view) {
             super(view);
             binding = PostsBinding.bind(view);

@@ -29,6 +29,9 @@ import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -86,6 +89,8 @@ public class PostsActivity extends AppCompatActivity {
                 UserId = mAuth.getCurrentUser().getUid();
                 Date date = new Date();
                 DocumentReference documentReference = fStore.collection("Posts").document();
+                String postId = documentReference.getId();
+                int count = 0;
                 Map<String,Object> posts = new HashMap<>();
                 posts.put("uid",UserId);
                 posts.put("CreatedBy",userName);
@@ -93,6 +98,7 @@ public class PostsActivity extends AppCompatActivity {
                 posts.put("PostImage",postImageUri);
                 posts.put("ProfileImageUri",profileImageUri);
                 posts.put("timeStamp",date.getTime());
+                posts.put("postId",postId);
                 documentReference.set(posts).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {

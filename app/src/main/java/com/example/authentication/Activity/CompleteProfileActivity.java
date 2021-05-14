@@ -44,8 +44,6 @@ public class CompleteProfileActivity extends AppCompatActivity {
         String name = getIntent().getStringExtra("FullName");
         String email = getIntent().getStringExtra("Email");
         String mobile = getIntent().getStringExtra("Mobile");
-
-        binding.PersonName.setText(name);
         binding.emailAdress.setText(email);
         binding.phoneNumber.setText(mobile);
         binding.NewprofileImage.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +56,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
         binding.completeProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String userName = binding.PersonName.getText().toString();
                 String relationshipStatus = binding.reltionshipStatus.getText().toString();
                 String Bio = binding.Bio.getText().toString();
                 UserId = mAuth.getCurrentUser().getUid();
@@ -70,6 +69,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
                 users.put("Bio",Bio);
                 users.put("ProfileImage",profileImageUri);
                 users.put("uid",UserId);
+                users.put("username",userName);
                 documentReference.set(users).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

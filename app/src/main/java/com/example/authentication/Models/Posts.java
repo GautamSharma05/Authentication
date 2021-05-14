@@ -3,19 +3,20 @@ package com.example.authentication.Models;
 import java.sql.Timestamp;
 
 public class Posts {
-    private  String CreatedBy,Captions,PostImage,uid,ProfileImageUri;
+    private  String CreatedBy,Captions,PostImage,uid,ProfileImageUri,postId;
     private long timeStamp;
 
     public Posts() {
 
     }
 
-    public Posts(String createdBy, String captions, String postImage, String profileImageUri, long timeStamp) {
+    public Posts(String createdBy, String captions, String postImage, String profileImageUri, String postId, long timeStamp) {
         this.CreatedBy = createdBy;
         this.Captions = captions;
         this.PostImage = postImage;
         this.ProfileImageUri = profileImageUri;
         this.timeStamp = timeStamp;
+        this.postId = postId;
     }
 
     public String getCreatedBy() {
@@ -64,5 +65,13 @@ public class Posts {
 
     public void setTimeStamp(long timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
     }
 }

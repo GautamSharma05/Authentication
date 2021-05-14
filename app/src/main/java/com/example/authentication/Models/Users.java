@@ -1,19 +1,19 @@
 package com.example.authentication.Models;
 
 public class Users {
-    private String uid,FullName,MobileNumber,Email,Bio,ProfileImage,RelationshipStatus;
+    private String uid,FullName,MobileNumber,Email,Bio,ProfileImage,RelationShipStatus,username;
 
     public Users() {
     }
 
-    public Users(String uid, String fullName, String mobileNumber, String email, String bio, String profileImage, String relationshipStatus) {
-        this.uid = uid;
+    public Users(String fullName, String mobileNumber, String email, String bio, String profileImage, String relationShipStatus, String username) {
         this.FullName = fullName;
         this.MobileNumber = mobileNumber;
         this.Email = email;
         this.Bio = bio;
         this.ProfileImage = profileImage;
-        this.RelationshipStatus = relationshipStatus;
+        this.RelationShipStatus = relationShipStatus;
+        this.username = username;
     }
 
     public String getBio() {
@@ -32,12 +32,12 @@ public class Users {
         ProfileImage = profileImage;
     }
 
-    public String getRelationshipStatus() {
-        return RelationshipStatus;
+    public String getRelationShipStatus() {
+        return RelationShipStatus;
     }
 
-    public void setRelationshipStatus(String relationshipStatus) {
-        RelationshipStatus = relationshipStatus;
+    public void setRelationShipStatus(String relationShipStatus) {
+        RelationShipStatus = relationShipStatus;
     }
 
     public String getMobileNumber() {
@@ -70,5 +70,13 @@ public class Users {
 
     public void setFullName(String fullName) {
         FullName = fullName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

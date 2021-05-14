@@ -48,6 +48,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 .placeholder(R.drawable.avatar)
                 .into(viewHolder.binding.profile);
 
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
