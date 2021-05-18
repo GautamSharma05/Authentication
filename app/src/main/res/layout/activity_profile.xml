@@ -50,7 +50,7 @@
         android:layout_marginLeft="42dp"
         android:layout_marginTop="84dp"
         android:paddingLeft="2dp"
-        android:text="20"
+        android:text="0"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -65,7 +65,7 @@
         android:layout_marginLeft="52dp"
         android:layout_marginTop="84dp"
         android:paddingLeft="2dp"
-        android:text="426"
+        android:text="0"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -82,7 +82,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:paddingLeft="2dp"
-        android:text="177"
+        android:text="0"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -206,9 +206,20 @@
         app:itemTextColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_menu" />
+
+    <ImageView
+        android:id="@+id/reelsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_add_circle_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

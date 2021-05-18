@@ -36,7 +36,6 @@ public class MessagesActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         Objects.requireNonNull(getSupportActionBar()).hide();
         usersArrayList = new ArrayList<>();
-        binding.recyclerView.setHasFixedSize(true);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         customAdapter = new CustomAdapter(this, usersArrayList);
         binding.recyclerView.setAdapter(customAdapter);

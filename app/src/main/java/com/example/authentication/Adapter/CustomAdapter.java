@@ -66,6 +66,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public int getItemCount() {
         return usersArrayList.size();
     }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         SampleChatsBinding binding;
         public ViewHolder(View view) {

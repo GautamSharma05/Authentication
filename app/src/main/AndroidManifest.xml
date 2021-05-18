@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.authentication">
-
+<uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,13 +10,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Authentication">
-        <activity android:name=".Activity.PostsActivity"/>
+        <activity android:name=".Activity.UploadReelsActivity"></activity>
+        <activity android:name=".Activity.ReelsActivity" />
+        <activity android:name=".Activity.UsersActivity" />
+        <activity android:name=".Activity.PostsActivity" />
         <activity android:name=".Activity.MessagesActivity" />
         <activity android:name=".Activity.ChatActivity" />
         <activity android:name=".Activity.CompleteProfileActivity" />
         <activity android:name=".Activity.ProfileActivity" />
         <activity android:name=".Activity.ForgotPasswordActivity" />
-        <activity android:name=".Activity.SignUpActivity"/>
+        <activity android:name=".Activity.SignUpActivity" />
         <activity android:name=".Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +28,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.MainActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

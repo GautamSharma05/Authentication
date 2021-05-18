@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import com.example.authentication.Adapter.ProfileAdapter;
 import com.example.authentication.Models.Posts;
@@ -48,6 +49,13 @@ public class ProfileActivity extends AppCompatActivity {
         profileAdapter = new ProfileAdapter(this,postsArrayList);
         binding.currentUserPostRecyclerView.setLayoutManager(new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false));
         binding.currentUserPostRecyclerView.setAdapter(profileAdapter);
+        binding.reelsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this,UploadReelsActivity.class);
+                startActivity(intent);
+            }
+        });
         fStore.collection("Posts").orderBy("timeStamp", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -72,7 +80,7 @@ public class ProfileActivity extends AppCompatActivity {
                 Toast.makeText(ProfileActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
-        
+
         UserId = mAuth.getUid();
         fStore.collection("Users").document(UserId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -98,12 +106,20 @@ public class ProfileActivity extends AppCompatActivity {
         binding.BottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.Chats) {
+                if (item.getItemId() == R.id.Home) {
                     Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
                 else if(item.getItemId() == R.id.Posts){
                     Intent intent = new Intent(ProfileActivity.this, PostsActivity.class);
+                    startActivity(intent);
+                }
+                else if(item.getItemId() == R.id.Likes){
+                    Intent intent = new Intent(ProfileActivity.this,UsersActivity.class);
+                    startActivity(intent);
+                }
+                else if(item.getItemId() == R.id.Reels){
+                    Intent intent = new Intent(ProfileActivity.this,ReelsActivity.class);
                     startActivity(intent);
                 }
                 return false;

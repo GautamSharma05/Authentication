@@ -70,6 +70,13 @@ public class MainActivity extends AppCompatActivity {
               startActivity(intent);
           }
       });
+      binding.imageView2.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+              startActivity(intent);
+          }
+      });
 
       binding.BottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
           @Override
@@ -82,6 +89,15 @@ public class MainActivity extends AppCompatActivity {
                   Intent intent = new Intent(MainActivity.this, PostsActivity.class);
                   startActivity(intent);
               }
+              else if(item.getItemId() == R.id.Likes){
+                 Intent intent = new Intent(MainActivity.this,UsersActivity.class);
+                 startActivity(intent);
+              }
+              else if(item.getItemId() == R.id.Reels){
+                  Intent intent = new Intent(MainActivity.this,ReelsActivity.class);
+                  startActivity(intent);
+              }
+
               return false;
           }
       });
