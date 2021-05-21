@@ -82,10 +82,10 @@ public class PostsActivity extends AppCompatActivity {
                 }
             }
         });
-        binding.postButton.setOnClickListener(new View.OnClickListener() {
+        /*binding.postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String captions = binding.captions.getText().toString();
+                //String captions = binding.captions.getText().toString();
                 UserId = mAuth.getCurrentUser().getUid();
                 Date date = new Date();
                 DocumentReference documentReference = fStore.collection("Posts").document();
@@ -94,7 +94,7 @@ public class PostsActivity extends AppCompatActivity {
                 Map<String,Object> posts = new HashMap<>();
                 posts.put("uid",UserId);
                 posts.put("CreatedBy",userName);
-                posts.put("Captions",captions);
+                //posts.put("Captions",captions);
                 posts.put("PostImage",postImageUri);
                 posts.put("ProfileImageUri",profileImageUri);
                 posts.put("timeStamp",date.getTime());
@@ -112,7 +112,7 @@ public class PostsActivity extends AppCompatActivity {
                     }
                 });
             }
-        });
+        });*/
 
     }
 

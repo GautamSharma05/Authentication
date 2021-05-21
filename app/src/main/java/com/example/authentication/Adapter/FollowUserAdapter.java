@@ -10,22 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.authentication.Models.Request;
 import com.example.authentication.Models.Users;
 import com.example.authentication.R;
-import com.example.authentication.databinding.SampleChatsBinding;
-import com.example.authentication.databinding.SampleProfileBinding;
 import com.example.authentication.databinding.ShowProfileBinding;
-import com.google.android.gms.common.util.ArrayUtils;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldPath;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.firestore.auth.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 public class FollowUserAdapter extends RecyclerView.Adapter {
+    String receiverUid,senderUid;
     Context context;
     ArrayList<Users> usersArrayList;
 
@@ -56,28 +53,73 @@ public class FollowUserAdapter extends RecyclerView.Adapter {
         viewHolder.binding.userName.setText(users.getUsername());
         viewHolder.binding.fullName.setText(users.getFullName());
         Glide.with(context).load(users.getProfileImage()).placeholder(R.drawable.avatar).into(viewHolder.binding.imageView);
+
         viewHolder.binding.followButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewHolder.binding.followButton.setText("Requested");
-                String receiverUid = users.getUid();
-                String senderUid = FirebaseAuth.getInstance().getUid();
+                 receiverUid = users.getUid();
+                 senderUid = FirebaseAuth.getInstance().getUid();
+                String Accept = "no";
                 DocumentReference documentReference = FirebaseFirestore.getInstance().collection("Requests").document(receiverUid);
-                documentReference.update("FollowRequest",FieldValue.arrayUnion(senderUid)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(context, "RequestSend", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(context, "Request Not Send", Toast.LENGTH_SHORT).show();
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()){
+                                documentReference.update("FollowRequest",FieldValue.arrayUnion(senderUid)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(context, "Request Send", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(context, "Request Not Send", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            else {
+                                Map<String,List<String>> request = new HashMap<>();
+                                request.put("FollowRequest",Arrays.asList(senderUid));
+                                documentReference.set(request).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(context, "Request is Send", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(context, "Request is Not Send", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
                     }
                 });
             }
-
         });
-
+        /*DocumentReference documentReference = FirebaseFirestore.getInstance().collection("Requests").document(FirebaseAuth.getInstance().getUid());
+       documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+              if(task.isSuccessful()){
+                  DocumentSnapshot documentSnapshot = task.getResult();
+                  if(documentSnapshot.exists()){
+                      List<String> showRequested = (List<String>) documentSnapshot.get("FollowRequest");
+                      for (int i =0;i<showRequested.size();i++){
+                          if(showRequested.get(i).trim() == receiverUid){
+                              viewHolder.binding.followButton.setText("Requested");
+                          }
+                          else {
+                              viewHolder.binding.followButton.setText("Follow");
+                          }
+                      }
+                  }
+              }
+            }
+        });*/
     }
 
     @Override

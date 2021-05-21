@@ -15,8 +15,10 @@ import com.example.authentication.Models.Posts;
 import com.example.authentication.Models.Users;
 import com.example.authentication.R;
 import com.example.authentication.databinding.ActivityProfileBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -29,7 +31,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@SuppressWarnings("unchecked")
 public class ProfileActivity extends AppCompatActivity {
     ActivityProfileBinding binding;
     ArrayList<Posts> postsArrayList;
@@ -101,6 +103,60 @@ public class ProfileActivity extends AppCompatActivity {
                     Log.d("error","User Data not found");
                 }
 
+            }
+        });
+        fStore.collection("Users").document(mAuth.getUid()).collection("Peoples").document("Followers").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+               if(task.isSuccessful()){
+                   DocumentSnapshot documentSnapshot = task.getResult();
+                   if(documentSnapshot.exists()){
+                       List<String> followersList = (List<String>) documentSnapshot.get("TotalFollowers");
+                       binding.followersNumber.setText(String.valueOf(followersList.size()));
+                   }
+               }
+
+            }
+        });
+        fStore.collection("Users").document(mAuth.getUid()).collection("Peoples").document("Following").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if(documentSnapshot.exists()){
+                        List<String> followingList = (List<String>) documentSnapshot.get("TotalFollowing");
+                        binding.followingNumbers.setText(String.valueOf(followingList.size()));
+                    }
+                }
+
+            }
+        });
+        binding.followersNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this,ShowFollowersActivity.class);
+                startActivity(intent);
+            }
+        });
+        binding.followersText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this,ShowFollowersActivity.class);
+                startActivity(intent);
+            }
+        });
+        binding.followingNumbers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this,ShowFollowingActivity.class);
+                startActivity(intent);
+            }
+        });
+        binding.followingText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this,ShowFollowingActivity.class);
+                startActivity(intent);
             }
         });
         binding.BottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

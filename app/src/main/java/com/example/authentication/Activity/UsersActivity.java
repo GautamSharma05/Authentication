@@ -7,14 +7,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.authentication.Adapter.FollowUserAdapter;
 import com.example.authentication.Models.Users;
 import com.example.authentication.R;
 import com.example.authentication.databinding.ActivityUsersBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -25,7 +28,7 @@ import com.google.firebase.firestore.auth.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
+@SuppressWarnings("unchecked")
 public class UsersActivity extends AppCompatActivity {
     ActivityUsersBinding binding;
     ArrayList<Users> usersArrayList;
@@ -42,6 +45,13 @@ public class UsersActivity extends AppCompatActivity {
         followUserAdapter = new FollowUserAdapter(this,usersArrayList);
         binding.userRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.userRecyclerView.setAdapter(followUserAdapter);
+        binding.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UsersActivity.this,ShowFollowRequestActivity.class);
+                startActivity(intent);
+            }
+        });
         fStore.collection("Users").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -62,6 +72,18 @@ public class UsersActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(UsersActivity.this, "We Try To Resolve", Toast.LENGTH_SHORT).show();
+            }
+        });
+        fStore.collection("Requests").document(FirebaseAuth.getInstance().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if(documentSnapshot.exists()){
+                        List<String> totalRequested = (List<String>) documentSnapshot.get("FollowRequest");
+                        binding.totalRequests.setText(String.valueOf(totalRequested.size()));
+                    }
+                }
             }
         });
 
@@ -88,5 +110,6 @@ public class UsersActivity extends AppCompatActivity {
                 return false;
             }
         });
+
     }
 }

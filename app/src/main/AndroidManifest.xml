@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.authentication">
-<uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Authentication">
-        <activity android:name=".Activity.UploadReelsActivity"></activity>
+        <activity android:name=".Activity.ShowFollowingActivity"></activity>
+        <activity android:name=".Activity.ShowFollowersActivity" />
+        <activity android:name=".Activity.ShowLikesActivity" />
+        <activity android:name=".Activity.ShowFollowRequestActivity" />
+        <activity android:name=".Activity.UploadReelsActivity" />
         <activity android:name=".Activity.ReelsActivity" />
         <activity android:name=".Activity.UsersActivity" />
         <activity android:name=".Activity.PostsActivity" />

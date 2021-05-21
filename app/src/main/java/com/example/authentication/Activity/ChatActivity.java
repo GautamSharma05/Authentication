@@ -95,7 +95,8 @@ public class ChatActivity extends AppCompatActivity {
                         .push()
                         .setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
+                    public void onSuccess(Void aVoid)
+                    {
                         database.getReference()
                                 .child("Chats")
                                 .child(receiverRoom)

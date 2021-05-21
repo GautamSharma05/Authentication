@@ -7,7 +7,7 @@
     tools:context=".Activity.MessagesActivity">
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/SkyChatLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -36,7 +36,7 @@
         android:textColor="@color/pink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintStart_toEndOf="@+id/SkyChatLogo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <SearchView
@@ -51,7 +51,7 @@
         android:background="@drawable/search_box"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/SkyChatLogo" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

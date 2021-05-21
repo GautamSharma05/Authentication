@@ -56,7 +56,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
         binding.completeProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userName = binding.PersonName.getText().toString();
+                String userName = binding.completeuserName.getText().toString();
                 String relationshipStatus = binding.reltionshipStatus.getText().toString();
                 String Bio = binding.Bio.getText().toString();
                 UserId = mAuth.getCurrentUser().getUid();
